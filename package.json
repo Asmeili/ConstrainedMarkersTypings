@@ -1,0 +1,24 @@
+{
+	"name": "@rbxts/ConstrainedMarkers",
+	"version": "1.1.0",
+	"license": "MIT",
+	"homepage": "https://github.com/Asmeili/ConstrainedMarkersTypings",
+	"devDependencies": {
+		"@rbxts/compiler-types": "^1.2.7-types.0",
+		"@rbxts/types": "^1.0.546",
+		"roblox-ts": "^1.2.7"
+	},
+	"types": "out/index.d.ts",
+	"main": "out/init.lua",
+	"files": [
+		"out"
+	],
+	"publishConfig": {
+		"access": "public"
+	},
+	"scripts": {
+		"dev": "rbxtsc -watch --verbose",
+		"build": "rbxtsc",
+		"prepublishOnly": "yarn run build"
+	}
+}
