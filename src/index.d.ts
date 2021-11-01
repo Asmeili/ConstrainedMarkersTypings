@@ -1,5 +1,4 @@
-
-export interface ConstrainedMarkersDefaults {
+interface ConstrainedMarkersDefaults {
     /**
      * @description Sets the width and height of the marker’s BodyGUI. The Scale component is applied to both axes, and is based on the boundary GUI’s shortest axis.
      * @default new UDim(0.05, 0)
@@ -73,21 +72,12 @@ type SetBoundaryArguments<T = BoundaryType> = (
 );
 
 
-export default class ConstrainedMarkers {
-    /**
-     * @description Create a new container for constrained markers.
-     * @param boundary {GuiObject} Used as the parent of marker GUIs. The limits of the boundary depends on the size of the GUI. Note that, since only the position of a marker is constrained, the marker’s body may still appear slightly outside the boundary.
-     * @param enabled {boolean} Sets whether the container will be enabled immediately, before being returned by New.
-     * @param defaults {ConstrainedMarkersDefaults} If specified, configures the appearance of the default marker template.
-     */
-    public constructor(boundary?: GuiObject, enabled?: boolean, defaults?: ConstrainedMarkersDefaults);
-
-
+declare interface ConstrainedMarkers {
     /**
      * @description Returns the boundary GUI.
      * @returns The boundary GUI.
      */
-    public BoundaryGUI(): GuiObject;
+    BoundaryGUI(this: ConstrainedMarkers): GuiObject;
 
 
     /**
@@ -95,7 +85,7 @@ export default class ConstrainedMarkers {
      * @param boundaryType {BoundaryType} See https://devforum.roblox.com/t/constrainedmarkers-module/67640
      * @default "Rectangle"
      */
-    public SetBoundaryType<T extends BoundaryType>(boundaryType: T, args?: SetBoundaryArguments<T>): void;
+    SetBoundaryType<T extends BoundaryType>(this: ConstrainedMarkers, boundaryType: T, args?: SetBoundaryArguments<T>): void;
 
 
     /**
@@ -105,7 +95,7 @@ export default class ConstrainedMarkers {
      * collected.
      * @param enabled {boolean} Whether the container is enabled.
      */
-    public SetEnabled(enabled: boolean): void;
+    SetEnabled(this: ConstrainedMarkers, enabled: boolean): void;
 
 
     /**
@@ -113,7 +103,7 @@ export default class ConstrainedMarkers {
      * @param constraintType {ConstraintType}
      * @default "Constrained"
      */
-    public SetConstraintType(constraintType: ConstraintType): void;
+    SetConstraintType(this: ConstrainedMarkers, constraintType: ConstraintType): void;
 
 
     /**
@@ -121,14 +111,14 @@ export default class ConstrainedMarkers {
      * @param enabled {boolean} Whether arrows are enabled.
      * @default true
      */
-    public SetArrowsEnabled(enabled: boolean): void;
+    SetArrowsEnabled(this: ConstrainedMarkers, enabled: boolean): void;
 
 
     /**
      * @description Sets the origin from which marker positions are determined. Marker target positions are projected onto a Camera’s 2D plane.
      * @param origin {Camera | undefined} Uses the Camera’s CFrame or uses the value of Workspace.CurrentCamera. Note that this updates when the CurrentCamera changes.
      */
-    public SetOrigin(origin?: Camera): void;
+    SetOrigin(this: ConstrainedMarkers, origin?: Camera): void;
 
 
     /**
@@ -136,31 +126,43 @@ export default class ConstrainedMarkers {
      * @param initialState {Partial<MarkerState>} Each recognized field in the initial state sets the value of the corresponding field the marker state. If an initial value is nil, then the field will be set to a default instead.
      * @returns A table that holds the marker’s state.
      */
-    public CreateMarker(initialState?: Partial<MarkerState>): MarkerState;
+    CreateMarker(this: ConstrainedMarkers, initialState?: Partial<MarkerState>): MarkerState;
 
 
     /**
      * @description Returns a list of all the marker states in the container. Note that the order is undefined.
      * @returns A list of marker states.
      */
-    public Markers(): MarkerState[];
+    Markers(this: ConstrainedMarkers): MarkerState[];
 
 
     /**
      * @description Removes one or more markers from the container. Changes made to each marker’s state will no longer be recognized, and the marker will no longer be valid for the container.
      * @throws An error if any value is not a known marker state.
      */
-    public RemoveMarker(...markers: MarkerState[]): void;
+    RemoveMarker(this: ConstrainedMarkers, ...markers: MarkerState[]): void;
 
 
     /**
      * @description Removes all markers from the container.
      */
-    public RemoveAllMarkers(): void;
+    RemoveAllMarkers(this: ConstrainedMarkers): void;
 
 
     /**
      * @description Reevaluates a marker state, forcing all changes made to the state to be recognized. Also checks if all values in the state are valid.
      */
-    public UpdateMarker(...markers: MarkerState[]): void;
+    UpdateMarker(this: ConstrainedMarkers, ...markers: MarkerState[]): void;
 }
+interface ConstrainedMarkersConstructor {
+    /**
+     * @description Create a new container for constrained markers.
+     * @param boundary {GuiObject} Used as the parent of marker GUIs. The limits of the boundary depends on the size of the GUI. Note that, since only the position of a marker is constrained, the marker’s body may still appear slightly outside the boundary.
+     * @param enabled {boolean} Sets whether the container will be enabled immediately, before being returned by New.
+     * @param defaults {ConstrainedMarkersDefaults} If specified, configures the appearance of the default marker template.
+     */
+     New: (boundary?: GuiObject, enabled?: boolean, defaults?: ConstrainedMarkersDefaults) => ConstrainedMarkers;
+}
+
+declare const ConstrainedMarkersExport: ConstrainedMarkersConstructor;
+export = ConstrainedMarkersExport;
